@@ -19,12 +19,16 @@ sbtPlugin := true
 //libraryDependencies ++= Seq("org.specs2" %% "specs2-core" % "3.9.1" % "test")
 //scalacOptions in Test ++= Seq("-Yrangepos")
 
-bintrayPackageLabels := Seq("sbt","plugin")
+bintrayPackageLabels := Seq("sbt", "plugin")
 bintrayVcsUrl := Some("""git@github.com:com.github.aaabramov/sbt-dsl-plugin.git""")
 
 initialCommands in console := """import aaabramov.sbt.dsl._"""
 
+enablePlugins(SbtPlugin)
 enablePlugins(ScriptedPlugin)
 // set up 'scripted; sbt plugin for testing sbt plugins
 scriptedLaunchOpts ++=
   Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+
+scriptedBufferLog := false
+
