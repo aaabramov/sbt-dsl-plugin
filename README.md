@@ -1,10 +1,82 @@
 # sbt-dsl-plugin
 
 Provides you opinionated sbt DSL to bu truly human readable
+This plugin requires sbt 1.0.0+
 
 ## Usage
 
-This plugin requires sbt 1.0.0+
+Which one is better? Decide yourself.
+
+#### Classic sbt
+
+```sbt
+lazy val baseSettings = BaseSettings(
+  version = Version("0.0.1"),
+  scalaVer = `2.12.12`,
+  organization = Organization("com.example.sbt"),
+  commonSettings = Seq(
+    "org.scalatest" %% "scalatest" % "3.2.2" % Test
+  )
+)
+
+lazy val common = create a module named "common" withConfig(
+
+) from baseSettings
+
+lazy val module1 = create a module named "module1" withConfig(
+  dependsOn = Seq(common)
+) from baseSettings
+
+lazy val module2 = create a module named "module2" withConfig(
+  dependsOn = Seq(common)
+) from baseSettings
+
+lazy val module2 = create root "root-project-name" containing(
+  common,
+  module1,
+  module2
+) from baseSettings
+
+```
+
+#### DSL
+
+```sbt
+name := "root-project-name"
+organization := "com.example.sbt"
+scalaVersion := "2.12.12"
+version := "0.0.1"
+
+lazy val global = project
+  .in(file("."))
+  .aggregate(
+    common,
+    module1,
+    module2
+  )
+
+lazy val common = project
+  .settings(
+    name := "common",
+    libraryDependencies ++= "org.scalatest" %% "scalatest" % "3.2.2" % Test
+  )
+
+lazy val module1 = project
+  .settings(
+    name := "module1"
+  )
+  .dependsOn(
+    common
+  )
+
+lazy val module2 = project
+  .settings(
+    name := "module2"
+  )
+  .dependsOn(
+    common
+  )
+```
 
 ### Testing
 

@@ -15,4 +15,4 @@ lazy val client = create a module named "client" withConfig(
 lazy val service = create root "service" containing(
   server,
   client
-)
+) from baseSettings
