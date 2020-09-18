@@ -11,8 +11,8 @@ object SbtSettingsPlugin extends AutoPlugin {
 
     val module: NamedWord.type = ModuleDSL.module
 
-    lazy val `2.12.12` = ScalaVer("2.12.10")
-    lazy val `2.13.3` = ScalaVer("2.13.3")
+    lazy val `2.12.12`: Entities.ScalaVer = Entities.ScalaVer("2.12.10")
+    lazy val `2.13.3`:  Entities.ScalaVer = Entities.ScalaVer("2.13.3")
 
     val Version: Entities.Version.type = Entities.Version
     val Organization: Entities.Organization.type = Entities.Organization
