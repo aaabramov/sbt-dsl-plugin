@@ -7,39 +7,7 @@ This plugin requires sbt 1.0.0+
 
 Which one is better? Decide yourself.
 
-#### Classic sbt
-
-```sbt
-lazy val baseSettings = BaseSettings(
-  version = Version("0.0.1"),
-  scalaVer = `2.12.12`,
-  organization = Organization("com.example.sbt"),
-  commonSettings = Seq(
-    "org.scalatest" %% "scalatest" % "3.2.2" % Test
-  )
-)
-
-lazy val common = create a module named "common" withConfig(
-
-) from baseSettings
-
-lazy val module1 = create a module named "module1" withConfig(
-  dependsOn = Seq(common)
-) from baseSettings
-
-lazy val module2 = create a module named "module2" withConfig(
-  dependsOn = Seq(common)
-) from baseSettings
-
-lazy val module2 = create root "root-project-name" containing(
-  common,
-  module1,
-  module2
-) from baseSettings
-
-```
-
-#### DSL
+#### Classic SBT
 
 ```sbt
 name := "root-project-name"
@@ -76,6 +44,38 @@ lazy val module2 = project
   .dependsOn(
     common
   )
+```
+
+#### DSL
+
+```sbt
+lazy val baseSettings = BaseSettings(
+  version = Version("0.0.1"),
+  scalaVer = `2.12.12`,
+  organization = Organization("com.example.sbt"),
+  commonSettings = Seq(
+    "org.scalatest" %% "scalatest" % "3.2.2" % Test
+  )
+)
+
+lazy val common = create a module named "common" withConfig(
+
+) from baseSettings
+
+lazy val module1 = create a module named "module1" withConfig(
+  dependsOn = Seq(common)
+) from baseSettings
+
+lazy val module2 = create a module named "module2" withConfig(
+  dependsOn = Seq(common)
+) from baseSettings
+
+lazy val module2 = create root "root-project-name" containing(
+  common,
+  module1,
+  module2
+) from baseSettings
+
 ```
 
 ### Testing
